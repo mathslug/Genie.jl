@@ -5,7 +5,6 @@ module Loader
 
 import Logging
 import REPL, REPL.Terminals
-import Revise
 import Genie
 import Sockets
 
@@ -192,7 +191,7 @@ end
 Loads the routes file.
 """
 function load_routes(routes_file::String = Genie.ROUTES_FILE_NAME; context::Union{Module,Nothing} = nothing) :: Nothing
-  isfile(routes_file) && Revise.includet(default_context(context), routes_file)
+  isfile(routes_file)
 
   nothing
 end
@@ -204,7 +203,7 @@ end
 Loads the app file (`app.jl` can be used for single file apps, instead of `routes.jl`).
 """
 function load_app(app_file::String = Genie.APP_FILE_NAME; context::Union{Module,Nothing} = nothing) :: Nothing
-  isfile(app_file) && Revise.includet(default_context(context), abspath(app_file))
+  isfile(app_file)
 
   nothing
 end
@@ -236,7 +235,6 @@ function autoload(root_dir::String = Genie.config.path_lib;
     @debug "Checking $fi"
     if validinclude(fi)
       @debug "Auto loading file: $fi"
-      Revise.includet(default_context(context), fi)
     end
   end
 
@@ -252,7 +250,6 @@ function autoload(root_dir::String = Genie.config.path_lib;
         @debug "Checking $fi"
         if validinclude(fi)
           @debug "Auto loading file: $fi"
-          Revise.includet(default_context(context), fi)
         end
       end
     end

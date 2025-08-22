@@ -4,7 +4,6 @@ the appropriate route handler function.
 """
 module Router
 
-import Revise
 import Reexport, Logging
 import HTTP, HttpCommon, Sockets, Millboard, Dates, OrderedCollections, JSON3, MIMEs
 import Genie
@@ -162,7 +161,7 @@ function route_request(req::HTTP.Request, res::HTTP.Response; stream::Union{HTTP
     end
   end
 
-  Genie.Configuration.isdev() && Revise.revise()
+  Genie.Configuration.isdev()
 
   for f in unique(pre_match_hooks)
     req, res, params.collection = f(req, res, params.collection)
@@ -220,7 +219,7 @@ function route_ws_request(req, msg::Union{String,Vector{UInt8}}, ws_client) :: S
 
   extract_get_params(HTTP.URIs.URI(req.target), params)
 
-  Genie.Configuration.isdev() && Revise.revise()
+  Genie.Configuration.isdev()
 
   match_channels(req, msg, ws_client, params)
 end

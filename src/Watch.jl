@@ -1,6 +1,5 @@
 module Watch
 
-using Revise
 using Genie
 using Logging
 using Dates
@@ -56,7 +55,7 @@ function watch( files::Vector{<: AbstractString},
 
   last_watched = now() - Millisecond(watch_frequency) # to trigger the first watch
 
-  Genie.Configuration.isdev() && Revise.revise()
+  Genie.Configuration.isdev()
 
   watched_files = collect_watched_files(WATCHED_FOLDERS[], extensions)
   try
